@@ -1,6 +1,6 @@
-= form_for [@restaurant, @review] do |do|
+= form_for [@restaurant, @review] do |f|
   = f.label :thoughts
   = f.text_area :thoughts
   = f.label :rating
   = f.select :rating, (1..5)
-  = f.submit 'Leave review'
+  = f.submit 'Leave Review'
