@@ -53,6 +53,8 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
-  resources :restaurants
+  resources :restaurants do
+    resources :reviews
   get 'restaurants' => 'restaurants#index'
+  end
 end
