@@ -3,6 +3,9 @@ require 'spec_helper'
 
 RSpec.describe Restaurant, type: :model do
   it { is_expected.to have_many :reviews }
+
+  it { is_expected.to belong_to :user}
+  
 end
 
 describe Restaurant, :type => :model do
@@ -17,5 +20,6 @@ describe Restaurant, :type => :model do
     restaurant = Restaurant.new(name: "Moe's Tavern")
     expect(restaurant).to have(1).error_on(:name)
   end
-  
+
+
 end

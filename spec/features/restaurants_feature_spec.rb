@@ -1,5 +1,5 @@
 require 'rails_helper'
-include RestaurantsHelper
+include UsersHelper
 
 feature 'restaurants' do
 
@@ -32,7 +32,8 @@ feature 'restaurants' do
     end
 
     scenario 'prompts user to fill out a form, then dispalys the new resaurant' do
-      sign_up
+      user = build :user
+      sign_up user
       visit '/restaurants'
       click_link 'Add a restaurant'
       fill_in 'Name', with: 'KFC'
@@ -43,7 +44,8 @@ feature 'restaurants' do
 
     context 'an invalid restaurant' do
       it 'does not let you submit a name that is too short' do
-        sign_up
+        user = build :user
+        sign_up user
         visit '/restaurants'
         click_link 'Add a restaurant'
         fill_in 'Name', with: 'kf'
@@ -66,11 +68,14 @@ feature 'restaurants' do
 
   context 'editing restaurants' do
 
-    before { Restaurant.create name: 'KFC' }
+    before { user = build :user
+             sign_up user
+             click_link 'Add a restaurant'
+             fill_in 'Name', with: 'KFC'
+             click_button 'Create Restaurant'
+             }
 
     scenario 'let a user edit a resaurant' do
-      sign_up
-      visit '/restaurants'
       click_link 'Edit KFC'
       fill_in 'Name', with: 'Kentucky Fried Chicken'
       click_button 'Update Restaurant'
@@ -78,18 +83,31 @@ feature 'restaurants' do
       expect(current_path).to eq '/restaurants'
     end
 
+    scenario 'user can only edit restaurants that they have created' do
+      click_link 'Sign out'
+      user2 = build(:user, email: 'user2@test.com')
+      sign_up user2
+      visit '/restaurants'
+      expect(page).not_to have_link 'Edit Mcdonalds'
+    end
+
   end
 
   context 'deleting restaurants' do
-    before {Restaurant.create name: 'KFC'}
+    before {user = build :user
+             sign_up user
+             click_link 'Add a restaurant'
+             fill_in 'Name', with: 'KFC'
+             click_button 'Create Restaurant'}
+
     scenario 'removes a restaurant when a user clicks a delete link' do
-      sign_up
-      visit '/restaurants'
       click_link 'Delete KFC'
       expect(page).not_to have_content 'KFC'
       expect(page).to have_content 'Restaurant deleted successfully'
     end
   end
+
+
 
 
 
