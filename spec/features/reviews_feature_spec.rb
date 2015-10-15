@@ -38,4 +38,20 @@ feature 'reviewing' do
     expect(page).not_to have_content 'so so'
     expect(current_path).to eq '/restaurants'
   end
+
+  scenario 'displays an average rating for all reviews' do
+    leave_review 'So so', '3'
+    click_link 'Sign out'
+    user2 = build :user, email: 'test2@example.com'
+    sign_up user2
+    leave_review 'Great', '5'
+    expect(page).to have_content 'Average rating: ★★★★☆'
+  end
+end
+
+def leave_review thoughts, rating
+  click_link 'Review KFC'
+  fill_in 'Thoughts', with: thoughts
+  select rating, from: 'Rating'
+  click_button 'Leave Review'
 end
