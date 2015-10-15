@@ -18,9 +18,10 @@
             = review.thoughts
             %strong= review.rating
             \/5
+            = link_to "Endorse Review", review_endorsements_path(review), method: :post
             - if current_user
               - if (review.user_id == current_user.id)
-                = link_to "Delete #{restaurant.name} Review", restaurant_review_path(restaurant, review), method: :delete
+                = link_to "Delete #{restaurant.name} Review", review_path(review), method: :delete
     - else
       %p No reviews
     Average rating:
