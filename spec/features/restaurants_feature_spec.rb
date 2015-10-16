@@ -67,7 +67,6 @@ feature 'restaurants' do
   end
 
   context 'editing restaurants' do
-
     before { user = build :user
              sign_up user
              click_link 'Add a restaurant'
@@ -90,7 +89,6 @@ feature 'restaurants' do
       visit '/restaurants'
       expect(page).not_to have_link 'Edit Mcdonalds'
     end
-
   end
 
   context 'deleting restaurants' do
@@ -106,9 +104,4 @@ feature 'restaurants' do
       expect(page).to have_content 'Restaurant deleted successfully'
     end
   end
-
-
-
-
-
 end

@@ -18,7 +18,7 @@
             = review.thoughts
             %strong= review.rating
             \/5
-            = link_to "Endorse Review", review_endorsements_path(review), class: 'endorsements-link'
+            = link_to "Endorse Review", review_endorsements_path(review), method: :post, class: 'endorsements-link'
             %span.endorsements_count = review.endorsements.count
             %p= pluralize review.endorsements.count, 'endorsement'
             - if current_user

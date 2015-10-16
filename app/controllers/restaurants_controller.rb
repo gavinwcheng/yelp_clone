@@ -1,5 +1,4 @@
 class RestaurantsController < ApplicationController
-
   before_action :authenticate_user!, :except => [:index, :show]
 
   def index
@@ -36,7 +35,6 @@ class RestaurantsController < ApplicationController
   def update
     @restaurant = Restaurant.find(params[:id])
     @restaurant.update(restaurant_params)
-
     redirect_to '/restaurants'
   end
 
@@ -46,6 +44,4 @@ class RestaurantsController < ApplicationController
     flash[:notice] = 'Restaurant deleted successfully'
     redirect_to '/restaurants'
   end
-
-
 end
